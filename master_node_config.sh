@@ -5,7 +5,6 @@ curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
 cat << EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
 deb https://apt.kubernetes.io/ kubernetes-xenial main
 EOF
-sudo apt autoremove
 sudo apt-get update
 sudo apt-get install -y docker-ce kubelet=1.19.2-00 kubeadm=1.19.2-00 kubectl=1.19.2-00 avahi-daemon libnss-mdns
 sudo touch /etc/docker/daemon.json
@@ -19,8 +18,6 @@ sudo systemctl daemon-reload
 sudo systemctl enable kubelet && systemctl restart kubelet
 sudosystemctl enable docker && systemctl restart docker
 sudo usermod -aG docker vagrant
-sudo apt update
-sudo apt upgrade -y
 sudo kubeadm init --pod-network-cidr=10.244.0.0/16
 sudo mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
