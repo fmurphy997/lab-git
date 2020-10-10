@@ -12,6 +12,10 @@ cat > /etc/docker/daemon.json <<EOF
   "exec-opts": ["native.cgroupdriver=systemd"]
 }
 EOF
+systemctl daemon-reload
+systemctl enable kubelet && systemctl restart kubelet
+systemctl enable docker && systemctl restart docker
+usermod -aG docker vagrant
 sudo apt autoremove
 sudo apt-get update
 sudo apt-get install -y docker-ce kubelet=1.19.2-00 kubeadm=1.19.2-00 kubectl=1.19.2-00 avahi-daemon libnss-mdns
