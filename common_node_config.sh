@@ -11,8 +11,8 @@ curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
 cat << EOF | sudo tee /etc/apt/sources.list.d/kubernetes.list
 deb https://apt.kubernetes.io/ kubernetes-xenial main
 EOF
-# Install Docker & K8S
 sudo apt-get update
+# Install Docker, K8S & mDNS Responder
 sudo apt-get install -y docker-ce kubelet=$K8S_VERSION kubeadm=$K8S_VERSION kubectl=$K8S_VERSION avahi-daemon libnss-mdns
 # Docker Configuration
 sudo touch /etc/docker/daemon.json && sudo chmod 755 /etc/docker/daemon.json
@@ -22,7 +22,8 @@ cat > /etc/docker/daemon.json <<EOF
 }
 EOF
 sudo systemctl daemon-reload
+sudo usermod -aG docker vagrant
 # Enable 
 sudo systemctl enable kubelet && sudo systemctl restart kubelet
 sudo systemctl enable docker && sudo systemctl restart docker
-sudo usermod -aG docker vagrant
+
