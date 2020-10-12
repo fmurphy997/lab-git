@@ -30,8 +30,6 @@ sudo systemctl enable docker && sudo systemctl restart docker
 cat << EOF | sudo tee /etc/apt/apt.conf.d/50unattended-upgrades
 Unattended-Upgrade::Allowed-Origins {
         "${distro_id}:${distro_codename}-security";
-        "${distro_id}ESMApps:${distro_codename}-apps-security";
-        "${distro_id}ESM:${distro_codename}-infra-security";
 };
 Unattended-Upgrade::Package-Blacklist {
 };
@@ -46,6 +44,6 @@ EOF
 cat << EOF | sudo tee /etc/apt/apt.conf.d/20auto-upgrades
 APT::Periodic::Update-Package-Lists "1";
 APT::Periodic::Download-Upgradeable-Packages "1";
-APT::Periodic::AutocleanInterval "1";
+APT::Periodic::AutocleanInterval "5";
 APT::Periodic::Unattended-Upgrade "1";
 EOF
