@@ -1,3 +1,4 @@
+#!/bin/bash
 IMAGE_REPO = "k8s.gcr.io"
 JOIN_TOKEN = "ayngk7.m1555duk5x2i3ctt"
 CONTROLLER_PORT = "8443"
