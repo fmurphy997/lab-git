@@ -1,5 +1,11 @@
 # Initialize K8S cluster
-sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+sudo kubeadm init kubeadm init --image-repository #{IMAGE_REPO} \
+             --apiserver-advertise-address=#{MASTER_IP} \
+             --apiserver-bind-port=#{MASTER_PORT} \
+             --kubernetes-version v#{KUBE_VER} \
+             --pod-network-cidr=#{POD_NW_CIDR} \
+             --token #{KUBE_TOKEN} \
+             --token-ttl 0 | tee /vagrant/kubeadm.log
 mkdir -p "/home/vagrant/.kube"
 sudo cp -i "/etc/kubernetes/admin.conf" "/home/vagrant/.kube/config"
 sudo chown vagrant:vagrant "/home/vagrant/.kube/config"
