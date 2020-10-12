@@ -23,7 +23,7 @@ cat > /etc/docker/daemon.json <<EOF
 EOF
 sudo systemctl daemon-reload
 sudo usermod -aG docker vagrant
-# Enable 
+# Restart and enable services 
 sudo systemctl enable kubelet && sudo systemctl restart kubelet
 sudo systemctl enable docker && sudo systemctl restart docker
 # Configure automatic security updates
