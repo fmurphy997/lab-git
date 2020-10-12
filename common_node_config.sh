@@ -1,5 +1,8 @@
 #!/bin/bash
 K8S_VERSION=1.19.2-00
+DISTRO_ID=Ubuntu
+DISTRO_CODENAME=bionic
+
 # Disable Swap for the Current Instance
 sudo swapoff -a
 # Disable Swap Permanently
@@ -29,8 +32,8 @@ sudo systemctl enable docker && sudo systemctl restart docker
 # Configure automatic security updates
 cat << EOF | sudo tee /etc/apt/apt.conf.d/50unattended-upgrades
 Unattended-Upgrade::Allowed-Origins {
-        "${distro_id}:${distro_codename}";
-        "${distro_id}:${distro_codename}-security";
+        "${DISTRO_ID}:${DISTRO_CODENAME}";
+        "${DISTRO_ID}:${DISTRO_CODENAME}-security";
 };
 Unattended-Upgrade::Package-Blacklist {
 };
