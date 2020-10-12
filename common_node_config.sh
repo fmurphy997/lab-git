@@ -26,4 +26,26 @@ sudo usermod -aG docker vagrant
 # Enable 
 sudo systemctl enable kubelet && sudo systemctl restart kubelet
 sudo systemctl enable docker && sudo systemctl restart docker
-
+# Configure automatic security updates
+cat < EOF | sudo tee /etc/apt/apt.conf.d/50unattended-upgrades
+Unattended-Upgrade::Allowed-Origins {
+        "${distro_id}:${distro_codename}-security";
+        "${distro_id}ESMApps:${distro_codename}-apps-security";
+        "${distro_id}ESM:${distro_codename}-infra-security";
+};
+Unattended-Upgrade::Package-Blacklist {
+};
+Unattended-Upgrade::DevRelease "false";
+Unattended-Upgrade::MinimalSteps "true";
+Unattended-Upgrade::Remove-Unused-Kernel-Packages "true";
+Unattended-Upgrade::Remove-Unused-Dependencies "true";
+Unattended-Upgrade::Automatic-Reboot "true";
+Unattended-Upgrade::Automatic-Reboot-Time "03:00";
+EOF
+# Security update and package cleanup frequency (in days)
+cat < EOF | sudo tee /etc/apt/apt.conf.d/20auto-upgrades
+APT::Periodic::Update-Package-Lists "1";
+APT::Periodic::Download-Upgradeable-Packages "1";
+APT::Periodic::AutocleanInterval "1";
+APT::Periodic::Unattended-Upgrade "1";
+EOF
