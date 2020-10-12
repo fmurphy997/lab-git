@@ -1,7 +1,7 @@
 # Initialize K8S cluster
 sudo kubeadm init kubeadm init --image-repository #{IMAGE_REPO} \
-             --apiserver-advertise-address=#{MASTER_IP} \
-             --apiserver-bind-port=#{MASTER_PORT} \
+             --apiserver-advertise-address=#{CONTROLLER_IP} \
+             --apiserver-bind-port=#{CONTROLLER_PORT} \
              --kubernetes-version v#{KUBE_VER} \
              --pod-network-cidr=#{POD_NW_CIDR} \
              --token #{KUBE_TOKEN} \
