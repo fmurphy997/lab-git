@@ -13,7 +13,7 @@ deb https://apt.kubernetes.io/ kubernetes-xenial main
 EOF
 sudo apt-get update
 # Install Docker, K8S & mDNS Responder
-sudo apt-get install -y docker-ce kubelet=$K8S_VERSION kubeadm=$K8S_VERSION kubectl=$K8S_VERSION avahi-daemon libnss-mdns
+sudo apt-get install -y docker-ce kubelet=$K8S_VERSION kubeadm=$K8S_VERSION kubectl=$K8S_VERSION avahi-daemon libnss-mdns unattended-upgrades
 # Docker Configuration
 sudo touch /etc/docker/daemon.json && sudo chmod 500 /etc/docker/daemon.json
 cat > /etc/docker/daemon.json <<EOF
