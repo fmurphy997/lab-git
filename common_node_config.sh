@@ -29,6 +29,7 @@ sudo systemctl enable docker && sudo systemctl restart docker
 # Configure automatic security updates
 cat << EOF | sudo tee /etc/apt/apt.conf.d/50unattended-upgrades
 Unattended-Upgrade::Allowed-Origins {
+        "${distro_id}:${distro_codename}";
         "${distro_id}:${distro_codename}-security";
 };
 Unattended-Upgrade::Package-Blacklist {
