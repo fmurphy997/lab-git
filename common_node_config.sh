@@ -44,6 +44,7 @@ Unattended-Upgrade::Automatic-Reboot-Time "03:00";
 EOF
 # Security update and package cleanup frequency (in days)
 cat << EOF | sudo tee /etc/apt/apt.conf.d/20auto-upgrades
+APT::Periodic::Update-Package-Lists "1";
 APT::Periodic::Download-Upgradeable-Packages "1";
 APT::Periodic::AutocleanInterval "1";
 APT::Periodic::Unattended-Upgrade "1";
