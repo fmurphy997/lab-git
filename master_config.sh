@@ -1,10 +1,11 @@
 #!/bin/bash
-IMAGE_REPO = "k8s.gcr.io"
-JOIN_TOKEN = "ayngk7.m1555duk5x2i3ctt"
-CONTROLLER_PORT = "8443"
-CONTROLLER_IP = "172.16.30.100"
+
+IMAGE_REPO = k8s.gcr.io
+JOIN_TOKEN = ayngk7.m1555duk5x2i3ctt
+CONTROLLER_PORT = "8443
+CONTROLLER_IP = 172.16.30.100
 K8S_VERSION = 1.19.2-00
-POD_NW_CIDR = "10.244.0.0/16"
+POD_NW_CIDR = 10.244.0.0/16
 
 # Initialize K8S cluster
 sudo kubeadm init kubeadm init --image-repository #{IMAGE_REPO} \
