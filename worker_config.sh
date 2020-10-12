@@ -1,3 +1,4 @@
+#!/bin/bash
 JOIN_TOKEN = "ayngk7.m1555duk5x2i3ctt"
 CONTROLLER_IP = 172.16.30.100
 MASTER_PORT = 8443
