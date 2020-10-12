@@ -1,5 +1,6 @@
 #!/bin/bash
 K8S_VERSION=1.19.2-00
+DOCKER_VERSION=5:19.03.4~3-0~ubuntu-xenial
 DISTRO_ID=Ubuntu
 DISTRO_CODENAME=bionic
 
@@ -16,7 +17,7 @@ deb https://apt.kubernetes.io/ kubernetes-xenial main
 EOF
 sudo apt-get update
 # Install Docker, K8S & mDNS Responder
-sudo apt-get install -y docker-ce kubelet=$K8S_VERSION kubeadm=$K8S_VERSION kubectl=$K8S_VERSION avahi-daemon libnss-mdns unattended-upgrades
+sudo apt-get install -y docker-ce=$DOCKER_VER kubelet=$K8S_VERSION kubeadm=$K8S_VERSION kubectl=$K8S_VERSION avahi-daemon libnss-mdns unattended-upgrades
 # Docker Configuration
 sudo touch /etc/docker/daemon.json && sudo chmod 500 /etc/docker/daemon.json
 cat > /etc/docker/daemon.json <<EOF
