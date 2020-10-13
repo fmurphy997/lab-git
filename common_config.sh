@@ -1,7 +1,4 @@
 #!/bin/bash
-K8S_VERSION=1.19.2-00
-DISTRO_ID=Ubuntu
-DISTRO_CODENAME=bionic
 
 # Disable Swap for the Current Instance
 sudo swapoff -a
@@ -16,7 +13,7 @@ deb https://apt.kubernetes.io/ kubernetes-xenial main
 EOF
 sudo apt-get update
 # Install Docker, K8S & mDNS Responder
-sudo apt-get install -y docker-ce kubelet=$K8S_VERSION kubeadm=$K8S_VERSION kubectl=$K8S_VERSION avahi-daemon libnss-mdns unattended-upgrades
+sudo apt-get install -y docker-ce kubelet=$K8S_APT_VERSION kubeadm=$K8S_APT_VERSION kubectl=$K8S_APT_VERSION avahi-daemon libnss-mdns unattended-upgrades
 # Docker Configuration
 sudo touch /etc/docker/daemon.json && sudo chmod 500 /etc/docker/daemon.json
 cat > /etc/docker/daemon.json <<EOF
