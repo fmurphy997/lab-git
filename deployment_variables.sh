@@ -1,3 +1,4 @@
+#!/bin/bash
 echo export "DISTRO_ID=Ubuntu"
 echo export "DISTRO_CODENAME=bionic"
 echo export "JOIN_TOKEN=ayngk7.m1555duk5x2i3ctt"
