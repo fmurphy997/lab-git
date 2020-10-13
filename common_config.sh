@@ -23,9 +23,13 @@ cat << EOF | sudo tee /etc/docker/daemon.json
   "exec-opts": ["native.cgroupdriver=systemd"]
 }
 EOF
-sudo systemctl daemon-reload
 sudo usermod -aG docker vagrant
+# Set Internal IP for Kubelet
+sudo sed -i 's/.$//' /var/lib/kubelet/kubeadm-flags.env
+sudo sed -i "s/$/ --node-ip=$KUBELET_IP/" "/var/lib/kubelet/kubeadm-flags.env"
+sudo sed -i 's/$/"/' /var/lib/kubelet/kubeadm-flags.env
 # Restart and enable services 
+sudo systemctl daemon-reload
 sudo systemctl enable kubelet && sudo systemctl restart kubelet
 sudo systemctl enable docker && sudo systemctl restart docker
 # Configure automatic security updates
