@@ -1,7 +1,5 @@
 #!/bin/bash
 
-./home/vagrant/deployment_variables.sh
-
 # Disable Swap for the Current Instance
 sudo swapoff -a
 # Disable Swap Permanently
