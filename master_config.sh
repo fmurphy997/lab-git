@@ -15,6 +15,10 @@ sudo cp -i "/etc/kubernetes/admin.conf" "/home/vagrant/.kube/config"
 sudo chown vagrant:vagrant "/home/vagrant/.kube/config"
 # Install WeaveNet CNI
 kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
+#Set Internal-IP for Kubelet service
+sudo sed -i 's/.$//' /var/lib/kubelet/kubeadm-flags.env
+sudo sed -i "s/$/ --node-ip=$KUBELET_IP/" "/var/lib/kubelet/kubeadm-flags.env"
+sudo sed -i 's/$/"/' /var/lib/kubelet/kubeadm-flags.env
 # Install Helm Package Manager for K8S
 sudo curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
 sudo chmod 700 get_helm.sh
