@@ -18,7 +18,7 @@ sudo apt-get update
 sudo apt-get install -y docker-ce kubelet=$K8S_APT_VERSION kubeadm=$K8S_APT_VERSION kubectl=$K8S_APT_VERSION avahi-daemon libnss-mdns unattended-upgrades
 # Docker Configuration
 sudo touch /etc/docker/daemon.json && sudo chmod 500 /etc/docker/daemon.json
-sudo cat > /etc/docker/daemon.json <<EOF
+cat << EOF | sudo tee /etc/docker/daemon.json
 {
   "exec-opts": ["native.cgroupdriver=systemd"]
 }
