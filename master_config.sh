@@ -1,6 +1,6 @@
 #!/bin/bash
 
-./deployment_variables.sh
+/bin/su -c "/home/vagrant/deployment_variables.sh" - vagrant
 
 # Initialize K8S cluster
 sudo kubeadm init --image-repository ${IMAGE_REPO} \
