@@ -58,3 +58,5 @@ APT::Periodic::Download-Upgradeable-Packages "1";
 APT::Periodic::AutocleanInterval "5";
 APT::Periodic::Unattended-Upgrade "1";
 EOF
+# Pipe Hostname & NAT IP to be displayed at end of Vagrantfile Run
+echo $HOSTNAME "can be reached at" $NAT_IP >> /vagrant/exitInterview.cfg
