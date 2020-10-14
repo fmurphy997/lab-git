@@ -1,2 +1,0 @@
-kubectl create namespace monitoring
-helm install stable/prometheus-operator --generate-name -n monitoring
