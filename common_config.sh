@@ -6,6 +6,14 @@ source ./deployment_variables.conf
 sudo swapoff -a
 # Disable Swap Permanently
 sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
+# Some network stack tweaking
+cat << EOF | sudo tee /etc/sysctl.d/10-network-security.conf
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+net.ipv4.ip_nonlocal_bind = 1
+net.ipv4.ip_forward = 1
+EOF
+sysctl --system
 # Add Repositories & GPG Keys for Docker & K8S
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
