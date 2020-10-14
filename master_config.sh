@@ -27,6 +27,6 @@ sudo chmod 700 get_helm.sh
 sudo ./get_helm.sh
 helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 helm repo update
-# Cleanup
+# Quick Cleanup
 sudo rm -f get_helm.sh
 sudo rm -f master_config.sh
