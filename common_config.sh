@@ -6,7 +6,7 @@ source ./deployment_variables.conf
 sudo swapoff -a
 # Disable Swap Permanently
 sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
-# Some network stack tweaking
+# Some network stack tweaking since Linux bridging is used
 cat << EOF | sudo tee /etc/sysctl.d/10-network-security.conf
 net.bridge.bridge-nf-call-ip6tables = 1
 net.bridge.bridge-nf-call-iptables = 1
