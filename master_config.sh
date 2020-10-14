@@ -15,7 +15,7 @@ sudo cp -i "/etc/kubernetes/admin.conf" "/home/vagrant/.kube/config"
 sudo chown vagrant:vagrant "/home/vagrant/.kube/config"
 # Install WeaveNet CNI
 kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
-# Set K8S Internal-IP to non-NAT interface
+# Set K8S Internal-IP to listen on non-NAT interface
 sudo sed -i 's/.$//' /var/lib/kubelet/kubeadm-flags.env
 sudo sed -i "s/$/ --node-ip=$KUBELET_IP/" "/var/lib/kubelet/kubeadm-flags.env"
 sudo sed -i 's/$/"/' /var/lib/kubelet/kubeadm-flags.env
@@ -26,6 +26,7 @@ sudo curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/maste
 sudo chmod 700 get_helm.sh
 sudo ./get_helm.sh
 helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+helm repo update
 # Cleanup
 sudo rm -f get_helm.sh
 sudo rm -f master_config.sh
