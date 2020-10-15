@@ -5,4 +5,5 @@ sudo ./get_helm.sh
 # Add & refresh repositories
 helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 helm repo add hashicorp https://helm.releases.hashicorp.com
+helm repo add gitlab https://charts.gitlab.io/
 helm repo update
