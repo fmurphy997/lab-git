@@ -1,0 +1,23 @@
+global:
+  domain: consul
+  datacenter: lab
+  enabled: true
+  gossipEncryption:
+    secretName: consul-gossip-encryption-key
+    secretKey: key 
+
+server:
+  replicas: 3
+  bootstrapExpect: 3 
+
+client:
+  grpc: true
+
+connectInject:
+  enabled: true
+  default: true
+
+tls:
+  enabled: true
+  enableAutoEncrypt: true
+  verify: true
