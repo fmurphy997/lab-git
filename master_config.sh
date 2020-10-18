@@ -22,9 +22,9 @@ sudo sed -i 's/$/"/' /var/lib/kubelet/kubeadm-flags.env
 sudo systemctl daemon-reload
 sudo systemctl restart kubelet
 # Install HashiCorp Consul
-curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
-sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-sudo apt-get update && sudo apt-get install consul
-export CONSUL_HTTP_ADDR="http://localhost:30101"
+#curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+#sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+#sudo apt-get update && sudo apt-get install consul
+#export CONSUL_HTTP_ADDR="http://localhost:30101"
 # Quick Cleanup
 sudo rm -f master_config.sh
