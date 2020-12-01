@@ -1,11 +1,11 @@
 - name: Install Prerequisites on All Nodes 
   hosts: all
 
-  vars_prompt:
-    - name: k8s_apt_version
-      prompt: "Choose Kubernetes Version to Install (latest, 1.18.12, 1.17.14): "
-      default: "latest"
-      private: no
+#  vars_prompt:
+#    - name: k8s_apt_version
+#      prompt: "Choose Kubernetes Version to Install (latest, 1.18.12, 1.17.14): "
+#      default: "latest"
+#      private: no
 
   user: ubuntu
 
@@ -89,14 +89,14 @@
       name: [ 'kubelet', 'kubeadm', 'kubectl' ]
       state: latest
     become: true
-    when: k8s_apt_version == "latest"
+#    when: k8s_apt_version == "latest"
 
-  - name: Installing Kubernetes v{{k8s_apt_version}}
-    apt:
-      name: [ 'kubelet={{k8s_apt_version}}-00', 'kubeadm={{k8s_apt_version}}-00', 'kubectl={{k8s_apt_version}}-00' ]
-      state: present
-    become: true
-    when: k8s_apt_version != "latest"
+#  - name: Installing Kubernetes v{{k8s_apt_version}}
+#    apt:
+#      name: [ 'kubelet={{k8s_apt_version}}-00', 'kubeadm={{k8s_apt_version}}-00', 'kubectl={{k8s_apt_version}}-00' ]
+#      state: present
+#    become: true
+#    when: k8s_apt_version != "latest"
 
   - name: Hold Back Kubernetes apt Packages from Updating
     dpkg_selections:
