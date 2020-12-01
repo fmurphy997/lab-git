@@ -1,0 +1,135 @@
+- name: Install Prerequisites on All Nodes 
+  hosts: all
+
+  vars_prompt:
+    - name: k8s_apt_version
+      prompt: "Choose Kubernetes Version to Install (latest, 1.18.12, 1.17.14): "
+      default: "latest"
+      private: no
+
+  user: ubuntu
+
+  tasks:  
+  - name: Setting Deployment Variables
+    include_vars: deployment_vars.yaml
+
+  - name: Disabling swap for This Session
+    shell: swapoff -a
+    when: ansible_swaptotal_mb > 0
+    become: true
+
+  - name: Disabling swap Permanently
+    replace:
+      path: /etc/fstab
+      regexp: '(.*swap.*)'
+      replace: '#\1'
+    become: true
+
+  - name: Configuring OS Unattended Update Installation Parameters (For Security Updates Only)
+    template:
+      src: /root/ansible/templates/50unattended-upgrades
+      dest: /etc/apt/apt.conf.d/50unattended-upgrades
+      owner: root
+      group: root
+      mode: '644'
+    become: true
+
+  - name: Configuring OS Automatic Update Checking & Package Clean-Up Parameters
+    template:
+      src: /root/ansible/templates/20auto-upgrades
+      dest: /etc/apt/apt.conf.d/20auto-upgrades
+      owner: root
+      group: root
+      mode: '644'
+    become: true
+
+  - name: Adding GPG Keys for Docker & Kubernetes apt Repositories
+    apt_key:
+      url: "{{item}}"
+      state: present
+    with_items:
+      - https://download.docker.com/linux/ubuntu/gpg
+      - https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    become: true
+
+  - name: Adding Docker & Kubernetes apt Repositories
+    apt_repository:
+      repo: "{{item}}"
+      state: present
+      update_cache: true
+    with_items:
+      - "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{distro_codename}} stable"
+      - deb https://apt.kubernetes.io/ kubernetes-xenial main
+    become: true
+
+  - name: Installing Latest Docker Release
+    apt:
+      name: docker-ce
+      state: latest
+    become: true
+
+  - name: Setting Docker cgroup Driver to systemd
+    template:
+      src: /root/ansible/templates/daemon.json
+      dest: /etc/docker/daemon.json
+      owner: root
+      group: root           
+      mode: '400'
+    become: true
+
+  - name: Adding ubuntu User Account to docker Group
+    user:
+      name: ubuntu
+      append: yes
+      groups: docker
+    become: true
+
+  - name: Installing Latest Kubernetes Release 
+    apt:
+      name: [ 'kubelet', 'kubeadm', 'kubectl' ]
+      state: latest
+    become: true
+    when: k8s_apt_version == "latest"
+
+  - name: Installing Kubernetes v{{k8s_apt_version}}
+    apt:
+      name: [ 'kubelet={{k8s_apt_version}}-00', 'kubeadm={{k8s_apt_version}}-00', 'kubectl={{k8s_apt_version}}-00' ]
+      state: present
+    become: true
+    when: k8s_apt_version != "latest"
+
+  - name: Hold Back Kubernetes apt Packages from Updating
+    dpkg_selections:
+      name: "{{item}}"
+      selection: hold
+    become: true
+    with_items:
+      - kubeadm
+      - kubectl
+      - kubelet
+
+  - name: Starting and Enabling docker-ce & kubelet
+    systemd:
+      name: "{{item}}"
+      state: restarted
+      enabled: yes
+    become: true
+    with_items:
+      - docker
+      - kubelet
+ 
+  - ansible.posix.sysctl:
+      name: "{{item}}"
+      value: '1'
+      state: present
+      reload: yes
+      sysctl_file: /etc/sysctl.d/10-network-security.conf
+    become: true
+    with_items:
+      - net.bridge.bridge-nf-call-ip6tables
+      - net.bridge.bridge-nf-call-iptables
+      - net.ipv4.ip_nonlocal_bind
+      - net.ipv4.ip_forward
+
+- import_playbook: controller_config.yaml
+- import_playbook: worker_config.yaml 

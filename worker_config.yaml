@@ -1,0 +1,13 @@
+- name: Add Worker Nodes to Kubernetes Cluster
+  hosts: [workers]
+  user: ubuntu
+  tasks:
+  - name: Copying Cluster Join Token to Worker Nodes
+    copy: 
+      src: join-command 
+      dest: /tmp/join-command.sh 
+      mode: '500'
+    become: true
+  - name: Joining Worker Nodes to Kubernetes Cluster
+    shell: /tmp/join-command.sh
+    become: true
