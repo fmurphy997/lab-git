@@ -27,7 +27,7 @@
 
   - name: Configuring OS Unattended Update Installation Parameters (For Security Updates Only)
     template:
-      src: /root/ansible/templates/50unattended-upgrades
+      src: /var/lib/awx/projects/kubernetes_cluster/templates/50unattended-upgrades
       dest: /etc/apt/apt.conf.d/50unattended-upgrades
       owner: root
       group: root
@@ -36,7 +36,7 @@
 
   - name: Configuring OS Automatic Update Checking & Package Clean-Up Parameters
     template:
-      src: /root/ansible/templates/20auto-upgrades
+      src: /var/lib/awx/projects/kubernetes_cluster/templates/20auto-upgrades
       dest: /etc/apt/apt.conf.d/20auto-upgrades
       owner: root
       group: root
@@ -70,7 +70,7 @@
 
   - name: Setting Docker cgroup Driver to systemd
     template:
-      src: /root/ansible/templates/daemon.json
+      src: /var/lib/awx/projects/kubernetes_cluster/templates/daemon.json
       dest: /etc/docker/daemon.json
       owner: root
       group: root           
